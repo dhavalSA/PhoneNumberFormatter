@@ -38,7 +38,10 @@ final class FormattedTextFieldDelegate: NSObject, UITextFieldDelegate {
             let rangeExpressionEnd = resultText.index(resultText.startIndex, offsetBy: range.location + range.length)
             newString = resultText.replacingCharacters(in: rangeExpressionStart..<rangeExpressionEnd, with: string)
         }
-
+        
+        if newString.count > formatter.config.getDefaultConfig().phoneFormat.count {
+                return false // limit the maximum length of the mobile number to 12 digits
+            }
         let result = formatter.formatText(text: newString, prefix: prefix)
         textField.text = result.text
 
